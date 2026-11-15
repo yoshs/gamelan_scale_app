@@ -83,9 +83,12 @@ async function playManualNote(scale, note, octave, pointerId) {
 
 function bindPlayableKey(key, scale, note, octave = 0) {
   key.addEventListener('pointerdown', event => {
+    // Touch contacts are handled together below, including simultaneous
+    // contacts reported in a single Safari touch event.
+    if (event.pointerType === 'touch') return;
     if (event.button !== 0) return;
     event.preventDefault();
-    key.setPointerCapture?.(event.pointerId);
+    try { key.setPointerCapture?.(event.pointerId); } catch { /* Capture is optional. */ }
     playManualNote(scale, note, octave, event.pointerId);
   });
   key.addEventListener('pointerup', event => releaseManualPointer(event.pointerId));
@@ -98,6 +101,44 @@ function bindPlayableKey(key, scale, note, octave = 0) {
     const pointerId = Symbol('keyboard-activation');
     playManualNote(scale, note, octave, pointerId).finally(() => releaseManualPointer(pointerId));
   });
+}
+
+let knownTouchIds = new Set();
+
+function handleKeyboardTouches(event) {
+  const keyForTouch = touch => {
+    const key = touch.target?.closest?.('.key');
+    return key && document.contains(key) && key.dataset.scale && key.dataset.note ? key : null;
+  };
+  const contacts = [...event.touches].map(touch => ({ touch, key: keyForTouch(touch) })).filter(contact => contact.key);
+  const liveIds = new Set(contacts.map(({ touch }) => `touch:${touch.identifier}`));
+  // Only suppress gestures that begin on the instrument. The padding below
+  // the keys remains available for horizontal scrolling.
+  if ([...event.changedTouches].some(keyForTouch) && event.cancelable) event.preventDefault();
+  for (const id of knownTouchIds) {
+    if (!liveIds.has(id)) releaseManualPointer(id, event.type === 'touchcancel');
+  }
+  for (const { touch, key } of contacts) {
+    const id = `touch:${touch.identifier}`;
+    if (!knownTouchIds.has(id)) {
+      playManualNote(key.dataset.scale, Number(key.dataset.note), Number(key.dataset.octave ?? 0), id);
+    }
+  }
+  knownTouchIds = liveIds;
+}
+
+for (const type of ['touchstart', 'touchmove', 'touchend', 'touchcancel']) {
+  document.addEventListener(type, handleKeyboardTouches, { passive: false });
+}
+
+function resumeAudioOnGesture() {
+  if (audioContext && audioContext.state !== 'running') audioContext.resume().catch(() => {});
+}
+
+// Some mobile browsers unlock audio on release rather than initial contact.
+// Resolve any pending first-note resumes from that trusted gesture as well.
+for (const type of ['touchend', 'pointerup', 'click', 'keydown']) {
+  document.addEventListener(type, resumeAudioOnGesture, { capture: true });
 }
 
 function clearPlayback() {
@@ -217,3 +258,4 @@ window.addEventListener('pagehide', clearPlayback);
 window.addEventListener('blur', () => {
   for (const pointerId of manualPointers.keys()) releaseManualPointer(pointerId, true);
 });
+window.addEventListener('pagehide', () => { knownTouchIds.clear(); });
