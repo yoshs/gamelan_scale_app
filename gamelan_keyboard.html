@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="グンデルの14鍵盤を弾き、ガムラン曲の自動演奏と譜面を楽しむ">
+<title>ガムラン、14鍵盤で演奏する</title>
+<link rel="stylesheet" href="gamelan_scale.css">
+</head>
+<body class="keyboard-page">
+<header><div class="page mast"><span class="mark" aria-hidden="true"></span>ガムランの音階</div></header>
+<main class="page">
+  <div class="intro">
+    <div><h1>グンデル、14の鍵盤</h1><p>低音から高音まで弾いてみよう。実際の曲の旋律も、譜面を追いながら聴けます。</p><nav><a href="#song-title">曲と譜面を見る ↓</a></nav></div>
+    <span class="region">中部ジャワのガムラン</span>
+  </div>
+  <nav class="page-nav" aria-label="ページ切り替え"><a href="gamelan_scale.html">音階を比べる</a><a href="gamelan_keyboard.html" aria-current="page">14鍵盤で演奏する</a></nav>
+  <section class="studio" aria-label="グンデルの14鍵盤">
+    <div class="toolbar">
+      <div class="controls">
+        <button type="button" id="compare" class="action">▶ 2つの鍵盤を聴く</button>
+      </div>
+      <div class="pitch-control">
+        <label for="base-pitch">基音（1番） <output id="base-pitch-value" for="base-pitch">269 Hz</output></label>
+        <input id="base-pitch" type="range" min="169" max="369" step="1" value="269" aria-valuetext="269 Hz">
+        <div class="pitch-range"><span>169 Hz</span><span>369 Hz</span></div>
+        <button type="button" id="reset-pitch" class="minor">269 Hzに戻す</button>
+      </div>
+      <p class="status" id="status" role="status"></p>
+    </div>
+    <div class="instruments">
+      <section class="instrument" aria-labelledby="slendro-label">
+        <span class="roman" lang="jv-Latn">Sléndro</span>
+        <h2 id="slendro-label">スレンドロ</h2><p>グンデル・バルン · 14鍵。1・2・3・5・6が音域を変えて並びます。</p>
+        <div class="keyboard-scroll" tabindex="0" role="region" aria-label="スレンドロの14鍵。左右にスクロールできます">
+          <div class="keys" id="s-keys"></div>
+        </div>
+        <p class="keyboard-guide">低音 ← → 高音　数字の下の点は低い音域、上の点は高い音域です。中央の1が基音です。</p>
+        <button class="scale-button" id="s-play" type="button">▶ 14鍵を順に聴く</button>
+      </section>
+      <section class="instrument pelog" aria-labelledby="pelog-label">
+        <span class="roman" lang="jv-Latn">Pélog</span>
+        <h2 id="pelog-label">ペログ</h2><p>グンデル・バルン · 14鍵。7音の調律から選んだ5種類の音が並びます。</p>
+        <label class="keyboard-layout" for="pelog-layout">鍵盤の種類
+          <select id="pelog-layout">
+            <option value="bem">ベム：1・2・3・5・6</option>
+            <option value="barang">バラン：2・3・5・6・7</option>
+          </select>
+        </label>
+        <div class="keyboard-scroll" tabindex="0" role="region" aria-label="ペログの14鍵。左右にスクロールできます">
+          <div class="keys" id="p-keys"></div>
+        </div>
+        <p class="keyboard-guide">低音 ← → 高音　演奏中に1・7が出ると、対応する鍵盤へ自動で切り替わります。</p>
+        <button class="scale-button" id="p-play" type="button">▶ 14鍵を順に聴く</button>
+      </section>
+    </div>
+  </section>
+  <section class="song-player" aria-labelledby="song-title">
+    <div class="lesson-head">
+      <h2 id="song-title">実際の曲を聴く</h2>
+    </div>
+    <h3>Lancaran Manyarséwu <small>マニャル・セウ</small></h3>
+    <p>スレンドロ・パテット・マニュラ。本体の骨格旋律（バルンガン）を1周演奏します。数字が音の番号、「・」は休符です。</p>
+    <div class="song-controls">
+      <button type="button" id="play-song" class="action">▶ 自動演奏</button>
+      <label for="song-tempo">テンポ
+        <select id="song-tempo">
+          <option value="60">ゆっくり · 60 BPM</option>
+          <option value="90" selected>標準 · 90 BPM</option>
+          <option value="120">速め · 120 BPM</option>
+        </select>
+      </label>
+      <div class="song-now">現在の音 <output id="song-note" aria-label="現在の音">—</output><span id="song-position"></span></div>
+    </div>
+    <h4 class="score-heading">演奏に合わせて追う数字譜</h4>
+    <div id="song-score" class="song-score" role="group" aria-label="Manyarséwuの数字譜。4行、各16拍"></div>
+    <details class="original-score" open>
+      <summary>元の譜面を見る</summary>
+      <p>ガムランの数字譜（クパティハン）です。自動演奏は上段の本体部分に対応します。原譜の表示にはインターネット接続が必要です。</p>
+      <p><a href="https://gamelanbvg.com/gendhing/pdf/sm/Manyarsewu.pdf" target="_blank" rel="noopener">譜面を別タブで開く（表示されない場合もこちら）</a></p>
+      <iframe class="score-pdf" src="https://gamelanbvg.com/gendhing/pdf/sm/Manyarsewu.pdf#view=FitH" title="Lancaran Manyarséwuの原譜（数字譜PDF）" loading="lazy"></iframe>
+    </details>
+    <p class="song-source">序奏と装飾・打楽器パートを省いた、合成音による旋律の演奏です。テンポ変更は次の再生から反映されます。<a href="https://gamelanbvg.com/gendhing/pdf/sm/Manyarsewu.pdf" target="_blank" rel="noopener">出典：Gendhing Jawiの数字譜（PDF）</a></p>
+  </section>
+  <details>
+    <summary>鍵盤の配列と調律について</summary>
+    <p>14鍵の配置は、低い6から高い3まで並ぶグンデル・バルンを参考にしています。ペログはベム（1・2・3・5・6）とバラン（2・3・5・6・7）を切り替えます。4番を含む7音の比較は、<a href="gamelan_scale.html">音階のページ</a>で試せます。</p>
+    <p>基音の初期値は269 Hzです。追加した音域は元の調律の周波数をオクターブごとに2倍・半分にして作っています。測定値の出典は<a href="gamelan_scale.html">音階のページ</a>に掲載しています。</p>
+    <p><a href="https://digilib.isi.ac.id/2133/1/Fisika%20Bunyi%20Gamelan-upload.pdf" target="_blank" rel="noopener">グンデルの鍵盤配列（Fisika Bunyi Gamelan）</a>　<a href="https://pages.hmc.edu/alves/pleng.html" target="_blank" rel="noopener">ペログ・ベムとバランの鍵盤（Bill Alves）</a></p>
+  </details>
+</main>
+<script src="gamelan_audio.js"></script>
+<script src="gamelan_keyboard.js"></script>
+</body>
+</html>
