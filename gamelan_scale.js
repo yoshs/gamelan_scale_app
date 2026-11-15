@@ -84,11 +84,6 @@ function markPhrase(group, index) {
 }
 
 allTones.addEventListener('click', () => setShowAll(!showAll));
-document.querySelector('#s-play').addEventListener('click', () => play([{ scale: 's', notes: shared }]));
-document.querySelector('#p-play').addEventListener('click', () => {
-  setShowAll(true);
-  play([{ scale: 'p', notes: scales.p.notes }]);
-});
 function addPhrase(container, name, notes, options = {}) {
   const group = { scale: 's', name, notes, ...options };
   const button = document.createElement('button');
