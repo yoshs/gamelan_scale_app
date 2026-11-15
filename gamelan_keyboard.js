@@ -195,7 +195,7 @@ document.querySelector('#play-song').addEventListener('click', () => {
     pelogLayoutInput.value = pelogLayout;
     renderKeyboard('p');
   }
-  play([{ ...song, beatSeconds: 60 / Number(document.querySelector('#song-tempo').value) }]);
+  playLoop({ ...song, beatSeconds: 60 / Number(document.querySelector('#song-tempo').value) });
 });
 
 selectSong('manyarsewu');

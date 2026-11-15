@@ -14,7 +14,7 @@
     <div><h1>グンデル、14の鍵盤</h1><p>複数の指で同時に弾けます。実際の曲の旋律も、譜面を追いながら聴けます。</p><nav><a href="#song-title">曲と譜面を見る ↓</a></nav></div>
     <span class="region">中部ジャワのガムラン</span>
   </div>
-  <nav class="page-nav" aria-label="ページ切り替え"><a href="gamelan_scale.html?v=20261115-stop7">音階を比べる</a><a href="gamelan_keyboard.html?v=20261115-stop7" aria-current="page">14鍵盤で演奏する</a></nav>
+  <nav class="page-nav" aria-label="ページ切り替え"><a href="gamelan_scale.html?v=20261115-loop8">音階を比べる</a><a href="gamelan_keyboard.html?v=20261115-loop8" aria-current="page">14鍵盤で演奏する</a></nav>
   <section class="studio" aria-label="グンデルの14鍵盤">
     <div class="toolbar">
       <div class="pitch-control">
@@ -64,7 +64,7 @@
     <p id="song-practice" class="song-practice"></p>
     <div class="song-controls">
       <div class="song-playback-controls">
-        <button type="button" id="play-song" class="action">▶ 自動演奏</button>
+        <button type="button" id="play-song" class="action">▶ ループ再生</button>
         <button type="button" id="stop-song" class="minor">■ 停止</button>
       </div>
       <label for="song-tempo">テンポ
@@ -73,6 +73,7 @@
           <option value="90" selected>標準 · 90 BPM</option>
           <option value="120">速め · 120 BPM</option>
           <option value="160">さらに速く · 160 BPM</option>
+          <option value="180">高速 · 180 BPM</option>
         </select>
       </label>
       <div class="song-now">現在の音 <output id="song-note" aria-label="現在の音">—</output><span id="song-position"></span></div>
@@ -86,17 +87,17 @@
       <p><a id="original-score-link" href="https://gamelanbvg.com/gendhing/pdf/sm/Manyarsewu.pdf" target="_blank" rel="noopener">譜面を別タブで開く（表示されない場合もこちら）</a></p>
       <iframe id="song-pdf" class="score-pdf" title="選択した曲の原譜（PDF）" loading="lazy"></iframe>
     </details>
-    <p class="song-source">序奏と装飾・打楽器パートを省いた、合成音による骨格旋律の演奏です。テンポ変更は次の再生から反映されます。<a id="song-source-link" href="https://gamelanbvg.com/gendhing/pdf/sm/Manyarsewu.pdf" target="_blank" rel="noopener">出典の譜面（PDF）</a></p>
+    <p class="song-source">最後まで進むと先頭に戻り、「停止」を押すまで繰り返します。序奏と装飾・打楽器パートを省いた、合成音による骨格旋律の演奏です。テンポ変更は次の再生から反映されます。<a id="song-source-link" href="https://gamelanbvg.com/gendhing/pdf/sm/Manyarsewu.pdf" target="_blank" rel="noopener">出典の譜面（PDF）</a></p>
   </section>
   <details>
     <summary>鍵盤の配列と調律について</summary>
-    <p>14鍵の配置は、低い6から高い3まで並ぶグンデル・バルンを参考にしています。ペログはベム（1・2・3・5・6）とバラン（2・3・5・6・7）を切り替えます。4番を含む7音の比較は、<a href="gamelan_scale.html?v=20261115-stop7">音階のページ</a>で試せます。</p>
-    <p>基音の初期値は269 Hzです。追加した音域は元の調律の周波数をオクターブごとに2倍・半分にして作っています。測定値の出典は<a href="gamelan_scale.html?v=20261115-stop7">音階のページ</a>に掲載しています。</p>
+    <p>14鍵の配置は、低い6から高い3まで並ぶグンデル・バルンを参考にしています。ペログはベム（1・2・3・5・6）とバラン（2・3・5・6・7）を切り替えます。4番を含む7音の比較は、<a href="gamelan_scale.html?v=20261115-loop8">音階のページ</a>で試せます。</p>
+    <p>基音の初期値は269 Hzです。追加した音域は元の調律の周波数をオクターブごとに2倍・半分にして作っています。測定値の出典は<a href="gamelan_scale.html?v=20261115-loop8">音階のページ</a>に掲載しています。</p>
     <p><a href="https://digilib.isi.ac.id/2133/1/Fisika%20Bunyi%20Gamelan-upload.pdf" target="_blank" rel="noopener">グンデルの鍵盤配列（Fisika Bunyi Gamelan）</a>　<a href="https://pages.hmc.edu/alves/pleng.html" target="_blank" rel="noopener">ペログ・ベムとバランの鍵盤（Bill Alves）</a></p>
   </details>
 </main>
-<script src="gamelan_audio.js?v=20261115-touch2"></script>
-<script src="gamelan_songs.js?v=20261115-songs6"></script>
-<script src="gamelan_keyboard.js?v=20261115-stop7"></script>
+<script src="gamelan_audio.js?v=20261115-loop8"></script>
+<script src="gamelan_songs.js?v=20261115-loop8"></script>
+<script src="gamelan_keyboard.js?v=20261115-loop8"></script>
 </body>
 </html>

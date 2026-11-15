@@ -254,6 +254,56 @@ async function play(groups) {
   }, (Math.max(offset + .12, playbackEnd + .1) + .035) * 1000));
 }
 
+async function playLoop(group) {
+  clearPlayback();
+  statusText.textContent = '';
+  const request = run;
+  try {
+    await readyAudio();
+  } catch {
+    if (request === run) statusText.textContent = '音声を開始できませんでした。もう一度ボタンを押してください。';
+    return;
+  }
+  if (request !== run) return;
+  preparePlayback([group]);
+  const beatSeconds = group.beatSeconds ?? .33;
+  const cycleLength = group.notes.length * beatSeconds;
+  if (!(cycleLength > 0)) return;
+  const lookahead = Math.min(.15, cycleLength / 2);
+  let nextStart = audioContext.currentTime + .035;
+
+  function schedule(callback, time) {
+    const id = setTimeout(() => {
+      const index = timers.indexOf(id);
+      if (index !== -1) timers.splice(index, 1);
+      if (request === run) callback();
+    }, Math.max(0, time - audioContext.currentTime) * 1000);
+    timers.push(id);
+  }
+
+  function scheduleCycle() {
+    if (request !== run) return;
+    // Schedule the following cycle before this one ends. Keep existing tails
+    // sounding across the boundary; never clear or restart the audio context.
+    const start = Math.max(nextStart, audioContext.currentTime + .005);
+    group.notes.forEach((note, index) => {
+      const time = start + index * beatSeconds;
+      const change = group.changes?.[index];
+      const octave = group.octaves?.[index] ?? 0;
+      if (note !== null) strike(group.scale, note, time, group, change?.cents, index === group.notes.length - 1, octave);
+      schedule(() => {
+        if (change || note === null) markNote();
+        else markNote(group.scale, note, octave);
+        markPhrase(group, index);
+      }, time);
+    });
+    nextStart = start + cycleLength;
+    schedule(scheduleCycle, nextStart - lookahead);
+  }
+
+  scheduleCycle();
+}
+
 window.addEventListener('pagehide', clearPlayback);
 window.addEventListener('blur', () => {
   for (const pointerId of manualPointers.keys()) releaseManualPointer(pointerId, true);
