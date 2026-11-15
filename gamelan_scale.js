@@ -124,7 +124,6 @@ const miring = addPhrase(miringOptions, 'ミリンの例', miringNotes, {
     3: { symbol: '3↓', label: '3より低い音', cents: pitchCents('s', 3) - 100 }
   }
 });
-document.querySelector('#miring-compare').addEventListener('click', () => play([plain, miring]));
 
 const pelogFiveOptions = document.querySelector('#pelog-five-options');
 const pelogFiveNotes = [
@@ -134,7 +133,6 @@ const pelogFiveNotes = [
 ].map(([name, notes, emphasis]) =>
   addPhrase(pelogFiveOptions, name, notes, { scale: 'p', emphasis, highlightEnding: false })
 );
-document.querySelector('#pelog-five-compare').addEventListener('click', () => play(pelogFiveNotes));
 
 const pelogPathetOptions = document.querySelector('#pelog-pathet-options');
 const pelogPathetPhrases = [
@@ -144,7 +142,6 @@ const pelogPathetPhrases = [
 ].map(([name, notes, emphasis]) =>
   addPhrase(pelogPathetOptions, name, notes, { scale: 'p', emphasis })
 );
-document.querySelector('#pelog-pathet-compare').addEventListener('click', () => play(pelogPathetPhrases));
 
 basePitchInput.addEventListener('input', renderTracks);
 document.querySelector('#reset-pitch').addEventListener('click', renderTracks);
