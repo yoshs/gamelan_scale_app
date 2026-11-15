@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="グンデルの14鍵盤を弾き、ガムラン曲の自動演奏と譜面を楽しむ">
 <title>ガムラン、14鍵盤で演奏する</title>
-<link rel="stylesheet" href="gamelan_scale.css?v=20261115-songs6">
+<link rel="stylesheet" href="gamelan_scale.css?v=20261115-stop7">
 </head>
 <body class="keyboard-page">
 <header><div class="page mast"><span class="mark" aria-hidden="true"></span>ガムランの音階</div></header>
@@ -14,12 +14,9 @@
     <div><h1>グンデル、14の鍵盤</h1><p>複数の指で同時に弾けます。実際の曲の旋律も、譜面を追いながら聴けます。</p><nav><a href="#song-title">曲と譜面を見る ↓</a></nav></div>
     <span class="region">中部ジャワのガムラン</span>
   </div>
-  <nav class="page-nav" aria-label="ページ切り替え"><a href="gamelan_scale.html?v=20261115-songs6">音階を比べる</a><a href="gamelan_keyboard.html?v=20261115-songs6" aria-current="page">14鍵盤で演奏する</a></nav>
+  <nav class="page-nav" aria-label="ページ切り替え"><a href="gamelan_scale.html?v=20261115-stop7">音階を比べる</a><a href="gamelan_keyboard.html?v=20261115-stop7" aria-current="page">14鍵盤で演奏する</a></nav>
   <section class="studio" aria-label="グンデルの14鍵盤">
     <div class="toolbar">
-      <div class="controls">
-        <button type="button" id="compare" class="action">▶ 2つの鍵盤を聴く</button>
-      </div>
       <div class="pitch-control">
         <label for="base-pitch">基音（1番） <output id="base-pitch-value" for="base-pitch">269 Hz</output></label>
         <input id="base-pitch" type="range" min="169" max="369" step="1" value="269" aria-valuetext="269 Hz">
@@ -66,7 +63,10 @@
     <p id="song-description"></p>
     <p id="song-practice" class="song-practice"></p>
     <div class="song-controls">
-      <button type="button" id="play-song" class="action">▶ 自動演奏</button>
+      <div class="song-playback-controls">
+        <button type="button" id="play-song" class="action">▶ 自動演奏</button>
+        <button type="button" id="stop-song" class="minor">■ 停止</button>
+      </div>
       <label for="song-tempo">テンポ
         <select id="song-tempo">
           <option value="60">ゆっくり · 60 BPM</option>
@@ -89,13 +89,13 @@
   </section>
   <details>
     <summary>鍵盤の配列と調律について</summary>
-    <p>14鍵の配置は、低い6から高い3まで並ぶグンデル・バルンを参考にしています。ペログはベム（1・2・3・5・6）とバラン（2・3・5・6・7）を切り替えます。4番を含む7音の比較は、<a href="gamelan_scale.html?v=20261115-songs6">音階のページ</a>で試せます。</p>
-    <p>基音の初期値は269 Hzです。追加した音域は元の調律の周波数をオクターブごとに2倍・半分にして作っています。測定値の出典は<a href="gamelan_scale.html?v=20261115-songs6">音階のページ</a>に掲載しています。</p>
+    <p>14鍵の配置は、低い6から高い3まで並ぶグンデル・バルンを参考にしています。ペログはベム（1・2・3・5・6）とバラン（2・3・5・6・7）を切り替えます。4番を含む7音の比較は、<a href="gamelan_scale.html?v=20261115-stop7">音階のページ</a>で試せます。</p>
+    <p>基音の初期値は269 Hzです。追加した音域は元の調律の周波数をオクターブごとに2倍・半分にして作っています。測定値の出典は<a href="gamelan_scale.html?v=20261115-stop7">音階のページ</a>に掲載しています。</p>
     <p><a href="https://digilib.isi.ac.id/2133/1/Fisika%20Bunyi%20Gamelan-upload.pdf" target="_blank" rel="noopener">グンデルの鍵盤配列（Fisika Bunyi Gamelan）</a>　<a href="https://pages.hmc.edu/alves/pleng.html" target="_blank" rel="noopener">ペログ・ベムとバランの鍵盤（Bill Alves）</a></p>
   </details>
 </main>
 <script src="gamelan_audio.js?v=20261115-touch2"></script>
 <script src="gamelan_songs.js?v=20261115-songs6"></script>
-<script src="gamelan_keyboard.js?v=20261115-songs6"></script>
+<script src="gamelan_keyboard.js?v=20261115-stop7"></script>
 </body>
 </html>

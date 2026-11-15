@@ -97,13 +97,6 @@ function markPhrase(group, index) {
 
 function preparePlayback() {}
 
-function keyboardGroup(scale) {
-  const keys = keyboardNotes(scale);
-  return { scale, notes: keys.map(key => key.note), octaves: keys.map(key => key.octave) };
-}
-
-document.querySelector('#compare').addEventListener('click', () => play([keyboardGroup('s'), keyboardGroup('p')]));
-
 function noteSymbol(note, octave = 0) {
   return String(note) + (octave > 0 ? '\u0307' : '\u0323').repeat(Math.abs(octave));
 }
@@ -195,6 +188,7 @@ for (const piece of [...songLibrary].sort((a, b) => a.level - b.level)) {
   difficultyGroups.get(piece.level).append(option);
 }
 songSelect.addEventListener('change', () => selectSong(songSelect.value));
+document.querySelector('#stop-song').addEventListener('click', () => clearPlayback());
 document.querySelector('#play-song').addEventListener('click', () => {
   if (selectedSong.layout && selectedSong.layout !== pelogLayout) {
     pelogLayout = selectedSong.layout;
