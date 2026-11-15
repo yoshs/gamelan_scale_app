@@ -14,6 +14,7 @@ let timers = [];
 const voices = new Set();
 const manualPointers = new Map();
 let manualMode = false;
+let loopActive = false;
 let run = 0;
 let basePitchHz = 269;
 const basePitchInput = document.querySelector('#base-pitch');
@@ -58,9 +59,9 @@ function releaseManualPointer(pointerId, cancelled = false) {
 }
 
 async function playManualNote(scale, note, octave, pointerId) {
-  // Stop an automatic sequence once, then let successive manual strikes overlap.
+  // Keep a backing loop running while manual strikes overlap it.
   if (!manualMode) {
-    clearPlayback();
+    if (!loopActive) clearPlayback();
     manualMode = true;
   }
   const request = run;
@@ -144,6 +145,7 @@ for (const type of ['touchend', 'pointerup', 'click', 'keydown']) {
 function clearPlayback() {
   run += 1;
   manualMode = false;
+  loopActive = false;
   for (const touch of manualPointers.values()) touch.cancelled = true;
   manualPointers.clear();
   refreshManualHighlights();
@@ -256,19 +258,26 @@ async function play(groups) {
 
 async function playLoop(group) {
   clearPlayback();
+  loopActive = true;
   statusText.textContent = '';
   const request = run;
   try {
     await readyAudio();
   } catch {
-    if (request === run) statusText.textContent = '音声を開始できませんでした。もう一度ボタンを押してください。';
+    if (request === run) {
+      loopActive = false;
+      statusText.textContent = '音声を開始できませんでした。もう一度ボタンを押してください。';
+    }
     return;
   }
   if (request !== run) return;
   preparePlayback([group]);
   const beatSeconds = group.beatSeconds ?? .33;
   const cycleLength = group.notes.length * beatSeconds;
-  if (!(cycleLength > 0)) return;
+  if (!(cycleLength > 0)) {
+    loopActive = false;
+    return;
+  }
   const lookahead = Math.min(.15, cycleLength / 2);
   let nextStart = audioContext.currentTime + .035;
 
