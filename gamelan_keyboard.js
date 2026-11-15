@@ -99,8 +99,6 @@ function keyboardGroup(scale) {
 }
 
 document.querySelector('#compare').addEventListener('click', () => play([keyboardGroup('s'), keyboardGroup('p')]));
-document.querySelector('#s-play').addEventListener('click', () => play([keyboardGroup('s')]));
-document.querySelector('#p-play').addEventListener('click', () => play([keyboardGroup('p')]));
 
 // Manyarséwu: main section only, transcribed from Gendhing Jawi's
 // sléndro manyura score. Each null is one unstruck beat (balungan nibani).
