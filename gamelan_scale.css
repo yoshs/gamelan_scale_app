@@ -40,7 +40,7 @@ h1{margin:0;font-size:clamp(31px,5.2vw,60px);font-weight:800;letter-spacing:-.05
 .instrument h2{font-size:24px;margin:0;letter-spacing:.02em}
 .roman{display:block;color:var(--accent);font-family:"Instrument Serif",Georgia,serif;font-size:18px;letter-spacing:.04em;margin-bottom:4px}
 .instrument p{color:#d9dfd6;font-size:13px;margin:7px 0 16px}
-.keyboard-scroll{position:relative;overflow-x:auto;max-width:100%;padding:5px 3px 12px;scrollbar-color:#8baa90 #18231d;scrollbar-width:thin}
+.keyboard-scroll{position:relative;overflow-x:auto;max-width:100%;padding:5px 3px 28px;scrollbar-color:#8baa90 #18231d;scrollbar-width:thin}
 .keys{display:flex;gap:5px;height:176px;min-width:730px;padding:12px 10px 20px;align-items:start;border:2px solid #725139;border-radius:9px;background:linear-gradient(#4e3b2d,#2a241d);box-shadow:inset 0 8px #96704455,inset 0 -10px #96704455}
 .key-number{position:relative;line-height:1}
 .key-number::after{content:attr(data-dots);position:absolute;left:50%;transform:translateX(-50%);font-size:20px;letter-spacing:1px;line-height:1}
@@ -49,10 +49,11 @@ h1{margin:0;font-size:clamp(31px,5.2vw,60px);font-weight:800;letter-spacing:-.05
 .instrument .keyboard-guide{font-size:12px;line-height:1.8;margin:6px 0}
 .keyboard-layout{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:10px;font-size:13px}
 .keyboard-layout select{max-width:100%;min-height:44px;padding:8px;border:1px solid #77847a;border-radius:8px;background:var(--night);color:#fff7e6;font:inherit}
-.key{position:relative;display:grid;place-items:center;flex:1;min-width:0;height:calc(100% - var(--step)*4px);border-radius:5px 5px 8px 8px;border:1px solid #fff5cc79;box-shadow:inset 0 -6px #172c252b,0 3px #0f1915;color:#203027;font-size:22px;font-weight:800;background:linear-gradient(110deg,#ffffff26,transparent 40%,#30261412),linear-gradient(var(--key-top),var(--key-bottom))}
+.key{position:relative;display:grid;place-items:center;flex:1;min-width:0;height:calc(100% - var(--step)*4px);border-radius:5px 5px 8px 8px;border:1px solid #fff5cc79;box-shadow:inset 0 -6px #172c252b,0 3px #0f1915;color:#203027;font-size:22px;font-weight:800;background:linear-gradient(110deg,#ffffff26,transparent 40%,#30261412),linear-gradient(var(--key-top),var(--key-bottom));touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .key::before,.key::after{content:"";position:absolute;left:50%;translate:-50% 0;width:4px;height:4px;border-radius:50%;background:#27342c70}
 .key::before{top:8px}.key::after{bottom:11px}
-.key:hover,.key.active{background:#fff4d2;color:#263026;box-shadow:0 0 14px #f9ecb953,inset 0 -3px #172c252b}
+.key.active,.key.pressed{background:#fff4d2;color:#263026;box-shadow:0 0 14px #f9ecb953,inset 0 -3px #172c252b}
+@media(hover:hover){.key:hover{background:#fff4d2;color:#263026;box-shadow:0 0 14px #f9ecb953,inset 0 -3px #172c252b}}
 .scale-page .key.muted-key{background:linear-gradient(#b9bdb7,#838b82);border-color:#aab0a6;color:#3d463d;box-shadow:inset 0 -6px #172c252b,0 3px #0f1915}
 .scale-page .key.muted-key:hover,.scale-page .key.muted-key:focus-visible{background:linear-gradient(#d0d4cd,#a0a89c)}
 .scale-page .instruments{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -75,7 +76,7 @@ h1{margin:0;font-size:clamp(31px,5.2vw,60px);font-weight:800;letter-spacing:-.05
 .dot .dot-metrics{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;width:64px;color:#d3ded4;line-height:1.6;white-space:nowrap;font-variant-numeric:tabular-nums;pointer-events:none}
 .dot .dot-metrics span{font-size:11px;color:inherit;font-weight:400}
 .dot:first-child .dot-metrics{left:0;transform:none;align-items:flex-start}
-.dot.active{background:#fff4d2;box-shadow:0 0 0 4px #fff4d251;z-index:2}
+.dot.active,.dot.pressed{background:#fff4d2;box-shadow:0 0 0 4px #fff4d251;z-index:2}
 .axis{display:flex;justify-content:space-between;margin:4px 11px 0;color:#d3ded4;font-size:10px}
 .caption{color:#f9f1dd;font-size:13px;line-height:1.7;margin:0}
 details{margin:19px 0 35px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;line-height:1.9}

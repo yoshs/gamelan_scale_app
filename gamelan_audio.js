@@ -12,6 +12,8 @@ let master;
 let activeNote = null;
 let timers = [];
 const voices = new Set();
+const manualPointers = new Map();
+let manualMode = false;
 let run = 0;
 let basePitchHz = 269;
 const basePitchInput = document.querySelector('#base-pitch');
@@ -39,8 +41,71 @@ function pitchCents(scale, note) {
   return scales[scale].cents[scales[scale].notes.indexOf(note)];
 }
 
+function refreshManualHighlights() {
+  document.querySelectorAll('[data-note]').forEach(element => {
+    const pressed = [...manualPointers.values()].some(touch =>
+      element.dataset.scale === touch.scale && Number(element.dataset.note) === touch.note &&
+      (element.dataset.octave === undefined || Number(element.dataset.octave) === touch.octave));
+    element.classList.toggle('pressed', pressed);
+  });
+}
+
+function releaseManualPointer(pointerId, cancelled = false) {
+  const touch = manualPointers.get(pointerId);
+  if (touch) touch.cancelled = cancelled;
+  manualPointers.delete(pointerId);
+  refreshManualHighlights();
+}
+
+async function playManualNote(scale, note, octave, pointerId) {
+  // Stop an automatic sequence once, then let successive manual strikes overlap.
+  if (!manualMode) {
+    clearPlayback();
+    manualMode = true;
+  }
+  const request = run;
+  const touch = { scale, note, octave, cancelled: false };
+  manualPointers.set(pointerId, touch);
+  statusText.textContent = '';
+  preparePlayback([{ scale, notes: [note] }]);
+  refreshManualHighlights();
+  try {
+    await readyAudio();
+    if (request !== run || touch.cancelled) return;
+    strike(scale, note, audioContext.currentTime + .005, {}, undefined, true, octave);
+  } catch {
+    if (request === run) {
+      statusText.textContent = '音声を開始できませんでした。もう一度ボタンを押してください。';
+      releaseManualPointer(pointerId, true);
+    }
+  }
+}
+
+function bindPlayableKey(key, scale, note, octave = 0) {
+  key.addEventListener('pointerdown', event => {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    key.setPointerCapture?.(event.pointerId);
+    playManualNote(scale, note, octave, event.pointerId);
+  });
+  key.addEventListener('pointerup', event => releaseManualPointer(event.pointerId));
+  key.addEventListener('pointercancel', event => releaseManualPointer(event.pointerId, true));
+  key.addEventListener('lostpointercapture', event => releaseManualPointer(event.pointerId, true));
+  // Keyboard and screen-reader activation still use click; pointer clicks have
+  // already sounded on pointerdown and must not trigger a second strike.
+  key.addEventListener('click', event => {
+    if (event.detail !== 0) return;
+    const pointerId = Symbol('keyboard-activation');
+    playManualNote(scale, note, octave, pointerId).finally(() => releaseManualPointer(pointerId));
+  });
+}
+
 function clearPlayback() {
   run += 1;
+  manualMode = false;
+  for (const touch of manualPointers.values()) touch.cancelled = true;
+  manualPointers.clear();
+  refreshManualHighlights();
   timers.forEach(clearTimeout);
   timers = [];
   for (const voice of voices) {
@@ -149,3 +214,6 @@ async function play(groups) {
 }
 
 window.addEventListener('pagehide', clearPlayback);
+window.addEventListener('blur', () => {
+  for (const pointerId of manualPointers.keys()) releaseManualPointer(pointerId, true);
+});

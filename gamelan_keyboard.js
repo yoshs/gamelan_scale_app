@@ -61,9 +61,7 @@ function renderKeyboard(scale) {
     key.append(label);
     const register = octave === 0 ? '中央の音域' : `${Math.abs(octave)}オクターブ${octave < 0 ? '下' : '上'}`;
     key.setAttribute('aria-label', `${data.name}の${note}番、${register}を鳴らす`);
-    key.addEventListener('click', () => {
-      play([{ scale, notes: [note], octaves: [octave] }]);
-    });
+    bindPlayableKey(key, scale, note, octave);
     keys.append(key);
   });
 }

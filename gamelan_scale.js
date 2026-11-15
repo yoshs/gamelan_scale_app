@@ -73,7 +73,7 @@ for (const [scale, data] of Object.entries(scales)) {
     key.dataset.note = note;
     key.textContent = note;
     key.setAttribute('aria-label', `${data.name}の${note}番を鳴らす`);
-    key.addEventListener('click', () => play([{ scale, notes: [note] }]));
+    bindPlayableKey(key, scale, note);
     keys.append(key);
   });
 }
