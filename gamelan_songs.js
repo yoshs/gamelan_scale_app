@@ -66,6 +66,48 @@ const songLibrary = [
     ] }]
   },
   {
+    id: 'singanebah', title: 'Lancaran Singanebah', kana: 'シンガネバ',
+    level: 2, difficulty: '初級', scale: 'p', pathet: 'バラン', layout: 'barang',
+    practice: '休符を挟む短い音型で、ペログの7を聴き分ける。',
+    sourceUrl: 'https://gamelanbvg.com/gendhing/pdf/p7/Singanebah.pdf',
+    sourceLabel: 'Gendhing Jawiの数字譜（PDF）',
+    sourceNote: '原譜の上段の本体3行を1周として繰り返します。Tambanは含みません。',
+    sections: [{ name: '本体', rows: [
+      '. 5 . 3 | . 5 . 3 | . 5 . 3 | . 6 . 7',
+      '. 6 . 7 | . 6 . 7 | . 6 . 7 | . 3 . 2',
+      '. 3 . 2 | . 3 . 2 | . 3 . 2 | . 5 . 3'
+    ] }]
+  },
+  {
+    id: 'kebogiro', title: 'Lancaran Kebogiro', kana: 'クボ・ギロ',
+    level: 3, difficulty: '初中級', scale: 'p', pathet: 'バラン', layout: 'barang',
+    practice: '繰り返す音型を、低音域と中央の音域で弾き分ける。',
+    sourceUrl: 'https://gamelanbvg.com/gendhing/pdf/p7/Kebogiro.pdf',
+    sourceLabel: 'Gendhing Jawiの数字譜（PDF）',
+    sourceNote: 'Ompakの5行を1周として繰り返します。Tamban（janturan）は含みません。',
+    sections: [{ name: 'Ompak', rows: [
+      '. 6- . 5- | . 3- . 2- | . 3- . 2- | . 6- . 5-',
+      '. 6- . 5- | . 3- . 2- | . 3- . 2- | . 6- . 5-',
+      '. 6 . 5 | . 6 . 7 | . 6 . 7 | . 6 . 5',
+      '. 6 . 5 | . 6 . 7 | . 6 . 7 | . 6 . 5',
+      '. 7 . 6 | . 3 . 2 | . 3 . 2 | . 6- . 5-'
+    ] }]
+  },
+  {
+    id: 'kandhang-bubrah', title: 'Lancaran Kandhang Bubrah', kana: 'カンダン・ブブラ',
+    level: 4, difficulty: '中級', scale: 'p', pathet: 'ネム', layout: 'bem',
+    practice: '1を使うベムの鍵盤で、長い休符と連続する音列を弾く。',
+    sourceUrl: 'https://gamelanbvg.com/gendhing/pdf/p6/KandhangBubrah.pdf',
+    sourceLabel: 'Gendhing Jawiの数字譜（PDF）',
+    sourceNote: 'Ompakの4行を1周として繰り返します。ペログの鍵盤をベムに切り替えます。',
+    sections: [{ name: 'Ompak', rows: [
+      '. . 3 . | 1 2 3 . | 6 5 2 1 | 3 2 1 6',
+      '. . 3 . | 1 2 3 . | 6 5 2 1 | 3 2 1 6',
+      '5 2 5 3 | 5 2 5 3 | 6 5 2 1 | 3 2 1 6',
+      '5 2 5 3 | 5 2 5 3 | 6 5 2 1 | 3 2 1 6'
+    ] }]
+  },
+  {
     id: 'puspawarna', title: 'Ketawang Puspawarna', kana: 'プスポワルノ',
     level: 4, difficulty: '中級', scale: 's', pathet: 'マニュラ',
     practice: '前半と後半の違いを聴き、高い2・3への移動を練習する。',

@@ -184,9 +184,10 @@ for (const piece of [...songLibrary].sort((a, b) => a.level - b.level)) {
   }
   const option = document.createElement('option');
   option.value = piece.id;
-  option.textContent = `${piece.title}（${piece.kana}）`;
+  option.textContent = `${scales[piece.scale].name}｜${piece.title}（${piece.kana}）`;
   difficultyGroups.get(piece.level).append(option);
 }
+document.querySelector('#difficulty-note').textContent = `全${songLibrary.length}曲（スレンドロ${songLibrary.filter(piece => piece.scale === 's').length}曲・ペログ${songLibrary.filter(piece => piece.scale === 'p').length}曲）。難易度は、このアプリで骨格旋律を弾く場合の目安です。`;
 songSelect.addEventListener('change', () => selectSong(songSelect.value));
 document.querySelector('#stop-song').addEventListener('click', () => clearPlayback());
 document.querySelector('#play-song').addEventListener('click', () => {
